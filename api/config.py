@@ -2,7 +2,7 @@ import json
 
 def handler(request):
     config = {
-        "verAddr": "https://ff-token-capture.vercel.app/api/capture",
+        "verAddr": "https://ff-token-captures.vercel.app/api/capture",
         "tokenCapture": True,
         "version": "1.0.0"
     }
