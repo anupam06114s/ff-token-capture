@@ -10,9 +10,11 @@ REAL_MAJOR_LOGIN_URL = "https://loginbp.ggblueshark.com/MajorLogin"
 
 @app.route('/')
 def home():
-    return "✅ Proxy server is running! Use /MajorLogin"
+    return "✅ Proxy server is running! Use /MajorLogin or /majorlogin"
 
+# Both case variants
 @app.route('/MajorLogin', methods=['POST', 'GET'])
+@app.route('/majorlogin', methods=['POST', 'GET'])
 def major_login():
     if request.method == 'GET':
         return "MajorLogin proxy - send POST with Protobuf data", 200
@@ -50,7 +52,7 @@ def major_login():
 @app.route('/api/config', methods=['GET'])
 def config():
     return jsonify({
-        "serverLoginUrl": "https://accesstoken-i0dx.onrender.com/MajorLogin",
+        "verAddr": "https://accessstoken-i0dx.onrender.com/MajorLogin",
         "tokenCapture": True,
         "version": "1.0.0"
     })
