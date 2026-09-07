@@ -6,7 +6,6 @@ import time
 app = Flask(__name__)
 tokens = {}
 
-# Real Garena MajorLogin endpoint
 REAL_MAJOR_LOGIN_URL = "https://loginbp.ggblueshark.com/MajorLogin"
 
 @app.route('/')
@@ -18,11 +17,9 @@ def major_login():
     if request.method == 'GET':
         return "MajorLogin proxy - send POST with Protobuf data", 200
     
-    # 1. Game se raw data lo
     raw_data = request.get_data()
     print(f"[*] Received {len(raw_data)} bytes from game")
     
-    # 2. Token capture (optional - raw data mein token hidden hai)
     if raw_data:
         tokens['latest'] = {
             'access_token': raw_data.hex()[:64],
@@ -31,7 +28,6 @@ def major_login():
         }
         print(f"[+] Raw data stored: {raw_data.hex()[:32]}...")
     
-    # 3. Real Garena server ko forward karo
     try:
         headers = {
             "Content-Type": "application/octet-stream",
@@ -44,12 +40,9 @@ def major_login():
             timeout=10
         )
         print(f"[*] Forwarded to real server, status: {response.status_code}")
-        
-        # 4. Real response game ko bhejo
         return response.content, response.status_code, {
             "Content-Type": "application/octet-stream"
         }
-        
     except Exception as e:
         print(f"[-] Forward error: {e}")
         return f"Proxy error: {e}", 500
@@ -57,7 +50,7 @@ def major_login():
 @app.route('/api/config', methods=['GET'])
 def config():
     return jsonify({
-        "serverLoginUrl": "https://accessstoken-i0dx.onrender.com/MajorLogin",
+        "serverLoginUrl": "https://accesstoken-i0dx.onrender.com/MajorLogin",
         "tokenCapture": True,
         "version": "1.0.0"
     })
